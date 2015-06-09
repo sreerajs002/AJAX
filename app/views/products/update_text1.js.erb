@@ -1,0 +1,74 @@
+$("#new").css("display","block");
+$(".update").css("display","none");
+$(".update").siblings(".update").css("display","none");
+$(".update").siblings(".cancel").css("display","none");
+$(".update").siblings(".edit").css("display","inline");
+$(".update").parent().parent().find(".pro_name").attr("readonly","true");
+$(".update").parent().parent().find(".pro_cost").attr("readonly","true");
+flag="<%=@ar[3]%>"
+if (flag==1)
+{
+pid="<%=@ar[0]%>";
+$("#create").css("display","none");
+name="<%=@ar[1]%>";
+cost="<%=@ar[2]%>";
+$('#tbody').append('<tr><form id="myform" action="/products/update_text" accept-charset="UTF-8" data-remote="true" method="post"><input name="utf8" type="hidden" value="✓"><td><input class="pro_id" type="text" name="pid" value="'+pid+'" placeholder="" style="border:0px;" readonly=""></td><td><input class="pro_name" type="text" name="name" value="'+name+'" placeholder="" style="border:0px;"></td><td><input class="pro_cost" type="text" name="cost" value="'+cost+'" placeholder="" style="border:0px;"></td><td><a class="edit" value="'+pid+'" style="display: none;">Edit</a><input type="submit" name="commit" value="update" class="update" style="display: inline;"></form><button type="button" class="cancel" style="display: inline;">Cancel</button></td><td><a id="D_'+pid+'" class="delete" data-confirm="Are you sure?" data-remote="true" rel="nofollow" data-method="post" href="/products/delete_text?pid='+pid+'">Destroy</a></td></tr>');
+$("#update").css("display","none");
+
+}
+if (flag==0)
+{
+pid="<%=@ar[0]%>";
+id="#"+pid;
+
+$(id).css("display","none");
+name="<%=@ar[1]%>";
+cost="<%=@ar[2]%>";
+$(id).parent().find("td").eq(1).html(name);
+$(id).parent().find("td").eq(2).html(cost);
+}
+
+
+data="<%=@flag%>"
+pro_obj="<%=@pro%>"
+if(pro_obj){$("#flashmessage").html("<p class='alert alert-success text-center'>"+data+"ed successfully</p>");};
+if(!pro_obj){$("#flashmessage").html("<p class='alert alert-warning text-center'>Error in "+data+"ing this record</p>");}
+
+
+$("#name").val("");
+$("#cost").val("");
+$("#new").css("display","inline");
+$(".edit").click(function(){
+    $(this).hide()
+    $("#create").css("display","none");
+
+    $(this).siblings(".update").css("display","inline");
+    $(this).siblings(".cancel").css("display","inline");
+    $(this).parent().parent().find(".pro_name").removeAttr("readonly");
+    $(this).parent().parent().find(".pro_cost").removeAttr("readonly");
+
+  });
+  $("#new").click(function(){
+    $(this).css("display","none");
+    $(".update").css("display","none");
+    $("#create").css("display","inline");
+  });
+$(".cancel").click(function(){
+    $("#new").css("display","block");
+    $(this).css("display","none");
+    $(this).siblings(".update").css("display","none");
+    $(this).siblings(".edit").css("display","inline");
+    $(this).parent().parent().find(".pro_name").attr("readonly","true");
+    $(this).parent().parent().find(".pro_cost").attr("readonly","true");
+
+  });
+$(".update").click(function(){
+	alert("hai");
+	$("#new").css("display","block");
+	$(this).css("display","none");
+	$(this).siblings(".update").css("display","none");
+	$(this).siblings(".cancel").css("display","none");
+	$(this).siblings(".edit").css("display","inline");
+	$(this).parent().parent().find(".pro_name").attr("readonly","true");
+	$(this).parent().parent().find(".pro_cost").attr("readonly","true");
+});

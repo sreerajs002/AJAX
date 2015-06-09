@@ -1,0 +1,35 @@
+flas="<%=@flash%>";
+if(flas){$("#flashmessage").html("<p class='alert alert-warning text-center'>"+flas+"</p>");}
+else{
+pid="tr#<%=@ar[0]%>";
+name="<%=@ar[1]%>";
+cost="<%=@ar[2]%>";
+value=$(pid).find(".pro_cost").val();
+$(pid).find(".pro_cost").attr("value",value);
+value=$(pid).find(".pro_name").val();
+$(pid).find(".pro_name").attr("value",value);
+$(pid).find(".cancel").css("display","none");
+$(pid).find(".update").css("display","none");
+$(pid).find(".edit").css("display","inline");
+$(pid).find(".pro_name").attr("readonly","true");
+$(pid).find(".pro_cost").attr("readonly","true");
+
+data="<%=@flag%>"
+pro_obj="<%=@pro%>"
+if(pro_obj){$("#flashmessage").html("<p class='alert alert-success text-center'>"+data+"ed successfully</p>");};
+if(!pro_obj){$("#flashmessage").html("<p class='alert alert-warning text-center'>Error in "+data+"ing this record</p>");}
+
+
+flag="<%=@ar[3]%>";
+if(flag==1)
+{
+$("#tbody").prepend("<%=raw escape_javascript(render 'form2') %>");
+$("#new").css("display","block");
+}
+if(flag==0)
+{
+$("#new").css("display","block");
+}
+$(pid).find(".pro_name").css("border","0px solid #31b0d5");
+$(pid).find(".pro_cost").css("border","0px solid #31b0d5");
+}

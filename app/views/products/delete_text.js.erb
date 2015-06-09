@@ -1,0 +1,16 @@
+
+
+
+id="#D_<%=params[:pid]%>";
+$(id).parent().parent().hide();
+del_obj="<%=@del%>"
+if(del_obj){$("#flashmessage").html("<p class='alert alert-success text-center'>Deleted successfully</p>");}
+if(!del_obj){$("#flashmessage").html("<p class='alert alert-warning text-center'>Error in Deleting this record</p>");}
+
+$(".delete").click(function(){
+id="#D_<%=params[:pid]%>";
+$(id).parent().parent().hide();
+del_obj="<%=@del%>"
+if(del_obj){$("#flashmessage").html("<p class='alert alert-success text-center'>Deleted successfully</p>");}
+if(!del_obj){$("#flashmessage").html("<p class='alert alert-warning text-center'>Error in Deleting this record</p>");}
+})

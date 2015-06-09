@@ -1,0 +1,106 @@
+<h1>Listing Products</h1>
+<div id="ajax">
+ <% if @pro.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@pro.errors.count, "error") %> prohibited this article from being saved:</h2>
+ 
+    <ul>
+    <% @pro.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end if @pro%>
+<div id="az">
+<%=render 'form1'%>
+</div>
+<a id="new" class="btn btn-info btn-block" >New Product</a>
+<br>
+
+<div id="create" >
+<%= form_tag({ controller: 'products', action: 'update_text' }, method: 'post', remote:true ,id:'new_form') do %>
+
+<label>Product Name: </label>
+<input id="name" type="text" name="name" text="" value="" placeholder="" autocomplete="false">
+<label for="Cost"> Cost: </label>
+<input id="cost" type="text" name="cost" text="" value="" placeholder="" autocomplete="false">
+<%= submit_tag "create", class: "bt"%> 
+<% end %>
+<button type="button" class="cancel1" style="display:inline">Cancel</button>
+</div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".pro_name").keyup(function(){
+    name=$(this).val();
+    cost=$(this).parent().parent().find(".pro_cost").val();
+    pid=$(this).parent().parent().find(".pro_id").val();
+    myref="/products/update_text?pid="+pid+"&name="+name+"&cost="+cost;
+    $(this).parent().parent().find(".update").attr("href",myref);
+  });
+  $(".pro_cost").keyup(function(){
+    cost=$(this).val();
+    name=$(this).parent().parent().find(".pro_name").val();
+    pid=$(this).parent().parent().find(".pro_id").val();
+    myref="/products/update_text?pid="+pid+"&name="+name+"&cost="+cost;
+    $(this).parent().parent().find(".update").attr("href",myref);
+  });
+  $("#create").css("display","none");
+  $(".update").css("display","none");
+  $(".cancel").css("display","none");
+
+  $(".edit").click(function(){
+    $(this).hide()
+    $("#create").css("display","none");
+
+    $(this).siblings(".update").css("display","inline");
+    $(this).siblings(".cancel").css("display","inline");
+    $(this).parent().parent().find(".pro_name").removeAttr("readonly");
+    $(this).parent().parent().find(".pro_cost").removeAttr("readonly");
+    $(this).parent().parent().find(".pro_name").css("border","1px solid #31b0d5");
+    $(this).parent().parent().find(".pro_name").css("width","100%");
+    $(this).parent().parent().find(".pro_cost").css("border","1px solid #31b0d5");
+    $(this).parent().parent().find(".pro_cost").css("width","100%");
+
+  });
+  $("#new").click(function(){
+    $(this).css("display","none");
+    $(".update").css("display","none");
+    $("#create").css("display","inline");
+    $("#create").find("#cost").val("");
+    $("#create").find("#name").val("");
+
+  });
+  $(".cancel1").click(function(){
+    $(this).parent().hide();
+    $("#new").css("display","block");
+    $(this).parent().parent().find(".pro_name").css("border","0px solid #31b0d5");
+    $(this).parent().parent().find(".pro_cost").css("border","0px solid #31b0d5");
+  });
+$(".cancel").click(function(){
+    $("#new").css("display","block");
+    $(this).css("display","none");
+    $(this).siblings(".update").css("display","none");
+    $(this).siblings(".edit").css("display","inline");
+    $(this).parent().parent().find(".pro_name").attr("readonly","true");
+    value=$(this).parent().parent().find(".pro_name").attr("value");
+    $(this).parent().parent().find(".pro_name").val(value);
+    value=$(this).parent().parent().find(".pro_cost").attr("value");
+    $(this).parent().parent().find(".pro_cost").val(value);
+    $(this).parent().parent().find(".pro_cost").attr("readonly","true");
+    $(this).parent().parent().find(".pro_name").css("border","0px solid #31b0d5");
+    $(this).parent().parent().find(".pro_cost").css("border","0px solid #31b0d5");
+  });
+})
+  
+</script>
+<style type="text/css" media="screen">
+  #myform{
+    display:inline;
+
+  }
+  #new_form{
+    display:inline;
+  }
+</style>
